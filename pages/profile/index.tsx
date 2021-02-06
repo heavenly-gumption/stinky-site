@@ -3,9 +3,6 @@ import SignOutButton from '../../components/sign-out-button'
 
 export default function ProfileIndex() {
     const [ session, loading ] = useSession()
-    console.log({
-      session
-    })
 
     if (loading) return null
   
