@@ -5,6 +5,6 @@ export function bindIdToModel<T>(id: DatabaseId, data) {
         id,
         ...data
     }
-    console.log(bindedData)
+    //console.log(bindedData)
     return bindedData as DocumentModel<T>
 }

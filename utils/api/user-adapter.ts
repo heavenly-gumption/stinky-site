@@ -34,17 +34,17 @@ function Adapter(config: {
   }
 
   async function createUser(profile: User) {
-    console.log({ function: 'createUser', profile })
+    //console.log({ function: 'createUser', profile })
     return Users.createUser(profile)
   }
   
   async function getUser(id: string) {
-    console.log({ function: 'getUser', id })
+    //console.log({ function: 'getUser', id })
     return Users.getUser(id)
   }
   
   async function getUserByEmail(email: string) {
-    console.log({ function: 'getUserByEmail', email })
+    //console.log({ function: 'getUserByEmail', email })
     return Users.getUserByEmail(email)
   }
   
@@ -52,11 +52,11 @@ function Adapter(config: {
     providerId,
     providerAccountId
   ) {
-    console.log({ function: 'getUserByProviderAccountId', providerId, providerAccountId })
+    //console.log({ function: 'getUserByProviderAccountId', providerId, providerAccountId })
     const accountDoc = await Accounts.getAccountByProviderAccountId(providerId, providerAccountId)
-    console.log({
-      accountDoc
-    })
+    //console.log({
+    //   accountDoc
+    // })
     if (!accountDoc) {
       return null
     }
@@ -64,17 +64,17 @@ function Adapter(config: {
   }
   
   // async function getUserByCredentials(credentials) {
-  //   console.log({ function: 'getUserByCredentials', credentials })
+  //console.log({ function: 'getUserByCredentials', credentials })
   //   return null
   // }
   
   async function updateUser(user) {
-    console.log({ function: 'updateUser', user })
+    //console.log({ function: 'updateUser', user })
     return Users.updateUser(user)
   }
   
   async function deleteUser(userId) {
-    console.log({ function: 'deleteUser', userId })
+    //console.log({ function: 'deleteUser', userId })
     return Users.deleteUserById(userId)
   }
   
@@ -87,15 +87,15 @@ function Adapter(config: {
     accessToken,
     accessTokenExpires
   ) {
-    console.log({
-      function: 'linkAccount', userId,
-      providerId,
-      providerType,
-      providerAccountId,
-      refreshToken,
-      accessToken,
-      accessTokenExpires
-    })
+    // console.log({
+    //   function: 'linkAccount', userId,
+    //   providerId,
+    //   providerType,
+    //   providerAccountId,
+    //   refreshToken,
+    //   accessToken,
+    //   accessTokenExpires
+    // })
     await Accounts.createAccount({
       userId,
       providerAccountId,
@@ -112,17 +112,17 @@ function Adapter(config: {
     providerId,
     providerAccountId
   ) {
-    console.log({ function: 'unlinkAccount', userId, providerId, providerAccountId })
+    //console.log({ function: 'unlinkAccount', userId, providerId, providerAccountId })
     return Accounts.deleteAccountByProviderAccountId(providerId, providerAccountId)
   }
   
   async function createSession(user) {
-    console.log({ function: 'createSession', user })
+    //console.log({ function: 'createSession', user })
     return Sessions.createSession(user)
   }
   
   async function getSession(sessionToken) {
-    console.log({ function: 'getSession', sessionToken })
+    //console.log({ function: 'getSession', sessionToken })
     return Sessions.getSessionByToken(sessionToken)
   }
   
@@ -130,12 +130,12 @@ function Adapter(config: {
     session,
     force
   ) {
-    console.log({ function: 'updateSession', session, force })
+    //console.log({ function: 'updateSession', session, force })
     return Sessions.updateSession(session, force)
   }
   
   async function deleteSession(sessionToken) {
-    console.log({ function: 'deleteSession', sessionToken })
+    //console.log({ function: 'deleteSession', sessionToken })
     return Sessions.deleteSessionByToken(sessionToken)
   }
   
@@ -146,7 +146,7 @@ function Adapter(config: {
   //   secret,
   //   provider
   // ) {
-  //   console.log({
+  //console.log({
   //     function: 'createVerificationRequest', identifier,
   //     url,
   //     token,
@@ -162,7 +162,7 @@ function Adapter(config: {
   //   secret,
   //   provider
   // ) {
-  //   console.log({
+  //console.log({
   //     function: 'getVerificationRequest', identifier,
   //     token,
   //     secret,
@@ -177,7 +177,7 @@ function Adapter(config: {
   //   secret,
   //   provider
   // ) {
-  //   console.log({
+  //console.log({
   //     function: 'deleteVerificationRequest', identifier,
   //     token,
   //     secret,
