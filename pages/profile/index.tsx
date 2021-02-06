@@ -1,4 +1,5 @@
 import { useSession, getSession } from 'next-auth/client'
+import SignOutButton from '../../components/sign-out-button'
 
 export default function ProfileIndex() {
     const [ session, loading ] = useSession()
@@ -14,6 +15,7 @@ export default function ProfileIndex() {
       <>
         <h1>Protected Page haha</h1>
         <p>You can view this page because you are signed in.</p>
+        <SignOutButton/>
       </>
     )
 }

@@ -4,6 +4,7 @@ import {
     DocumentModel,
     Account
 } from "../../../types/models";
+import { bindIdToModel } from "./_model_util";
 
 export function AccountModel(db: FirebaseFirestore.Firestore) {
 
@@ -28,15 +29,12 @@ export function AccountModel(db: FirebaseFirestore.Firestore) {
             accessTokenExpires
         }
         const accountDoc = await Accounts.add(accountData)
-        return {
-            id: accountDoc.id,
-            ...accountData
-        }
+        return bindIdToModel<Account>(accountDoc.id, accountData)
     }
 
     async function getAccount(id: DatabaseId): Promise<DocumentModel<Account>> {
         const accountDoc = await Accounts.doc(id).get()
-        return accountDoc.data() as DocumentModel<Account>
+        return bindIdToModel<Account>(id, accountDoc.data())
     }
 
     async function getAccountByProviderAccountId(providerId, providerAccountId): Promise<DocumentModel<Account>> {
@@ -51,7 +49,7 @@ export function AccountModel(db: FirebaseFirestore.Firestore) {
             throw new Error('More than one account has the same provider account id')
         }
         const accountDoc = query.docs[0]
-        return accountDoc.data() as DocumentModel<Account>
+        return bindIdToModel<Account>(accountDoc.id, accountDoc.data())
     }
 
     async function deleteAccount(user: DocumentModel<Account>): Promise<void> {

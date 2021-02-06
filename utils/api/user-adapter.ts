@@ -54,10 +54,13 @@ function Adapter(config: {
   ) {
     console.log({ function: 'getUserByProviderAccountId', providerId, providerAccountId })
     const accountDoc = await Accounts.getAccountByProviderAccountId(providerId, providerAccountId)
+    console.log({
+      accountDoc
+    })
     if (!accountDoc) {
       return null
     }
-    return Users.getUser(accountDoc.id)
+    return Users.getUser(accountDoc.userId)
   }
   
   // async function getUserByCredentials(credentials) {

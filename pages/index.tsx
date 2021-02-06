@@ -15,7 +15,7 @@ export default function Home() {
         welcome to the base stinky-site
       </main>
 
-      <SignInButton origin={"http://localhost:3000"}/>
+      <SignInButton/>
       <footer className={styles.footer}>
         Powered by &nbsp;<a href="https://github.com/heavenly-gumption">heavenly-gumption</a>
       </footer>

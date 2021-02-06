@@ -7,6 +7,7 @@ import {
     DatabaseId
 } from "../../../types/models";
 import { generateRandomToken } from "../../random";
+import { bindIdToModel } from "./_model_util";
 
 const DEFAULT_MAX_AGE = 30 * 24 * 60 * 60 * 1000
 const DEFAULT_UPDATE_AGE = 0
@@ -38,10 +39,7 @@ export function SessionModel(db: FirebaseFirestore.Firestore, ageOptions: Sessio
             accessToken: generateRandomToken()
         }
         const sessionDoc = await Sessions.add(sessionData)
-        return {
-            id: sessionDoc.id,
-            ...sessionData
-        }
+        return bindIdToModel<Session>(sessionDoc.id, sessionData)
     }
 
     async function getSessionByToken(sessionToken: string): Promise<DocumentModel<Session> | null> {
@@ -53,7 +51,7 @@ export function SessionModel(db: FirebaseFirestore.Firestore, ageOptions: Sessio
             throw new Error('More than one session has the same email address')
         }
         const sessionDoc = query.docs[0]
-        const session = sessionDoc.data() as DocumentModel<Session>
+        const session = bindIdToModel<Session>(sessionDoc.id, sessionDoc.data())
         if (isSessionExpired(session)) {
             await deleteSession(session.id)
             return null

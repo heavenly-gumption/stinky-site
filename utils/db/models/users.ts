@@ -4,6 +4,7 @@ import {
     DocumentModel,
     User
 } from "../../../types/models";
+import { bindIdToModel } from "./_model_util";
 
 export function UserModel(db: FirebaseFirestore.Firestore) {
     const Users = db.collection(DatabaseCollections.Users)
@@ -12,15 +13,12 @@ export function UserModel(db: FirebaseFirestore.Firestore) {
         const { name, image, email } = user
         const userData = { name, image, email }
         const userDoc = await Users.add(userData)
-        return {
-            id: userDoc.id,
-            ...userData
-        }
+        return bindIdToModel<User>(userDoc.id, userData)
     }
 
     async function getUser(id: DatabaseId): Promise<DocumentModel<User>> {
         const userDoc = await Users.doc(id).get()
-        return userDoc.data() as DocumentModel<User>
+        return bindIdToModel<User>(id, userDoc.data())
     }
 
     async function getUserByEmail(email: string): Promise<DocumentModel<User>> {
@@ -32,7 +30,7 @@ export function UserModel(db: FirebaseFirestore.Firestore) {
             throw new Error('More than one user has the same email address')
         }
         const userDoc = query.docs[0]
-        return userDoc.data() as DocumentModel<User>
+        return bindIdToModel<User>(userDoc.id, userDoc.data())
     }
 
     async function updateUser(user: DocumentModel<User>): Promise<DocumentModel<User>> {
