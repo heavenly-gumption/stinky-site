@@ -13,7 +13,8 @@ export type DocumentModel<T> = T & {
 export type User = {
     name: string,
     email: string,
-    image: string
+    image: string,
+    roles: Role[]
 }
 
 export type Account = {
@@ -37,3 +38,7 @@ export type SessionAge = {
     maxAge: number,
     updateAge: number
 }
+
+export type Role = "user"
+| "5v5-uploader"
+| "admin"

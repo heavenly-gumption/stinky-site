@@ -10,8 +10,8 @@ export function UserModel(db: FirebaseFirestore.Firestore) {
     const Users = db.collection(DatabaseCollections.Users)
 
     async function createUser(user: User): Promise<DocumentModel<User>> {
-        const { name, image, email } = user
-        const userData = { name, image, email }
+        const { name, image, email, roles } = user
+        const userData = { name, image, email, roles }
         const userDoc = await Users.add(userData)
         return bindIdToModel<User>(userDoc.id, userData)
     }
@@ -34,11 +34,12 @@ export function UserModel(db: FirebaseFirestore.Firestore) {
     }
 
     async function updateUser(user: DocumentModel<User>): Promise<DocumentModel<User>> {
-        const { id, name, email, image } = user
+        const { id, name, email, image, roles } = user
         await Users.doc(id).update({
             name,
             email,
-            image
+            image,
+            roles
         })
         return user
     }

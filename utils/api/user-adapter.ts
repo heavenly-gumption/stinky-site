@@ -33,9 +33,18 @@ function Adapter(config: {
     }
   }
 
-  async function createUser(profile: User) {
+  async function createUser(profile: {
+    image: string,
+    email: string,
+    name: string
+  }) {
     //console.log({ function: 'createUser', profile })
-    return Users.createUser(profile)
+    return Users.createUser({
+      ...profile,
+      roles: [
+        'user'
+      ]
+    })
   }
   
   async function getUser(id: string) {
