@@ -21,6 +21,12 @@ export function UserModel(db: FirebaseFirestore.Firestore) {
         return bindIdToModel<User>(id, userDoc.data())
     }
 
+    async function getAllUsers(): Promise<DocumentModel<User>[]> {
+        const userDocs = await Users.get();
+        const allUsersData = userDocs.docs.map(doc => bindIdToModel<User>(doc.id, doc.data()))
+        return allUsersData
+    }
+
     async function getUserByEmail(email: string): Promise<DocumentModel<User>> {
         const query = await Users.where('email', '==', email).get()
         if (query.empty) {
@@ -52,6 +58,7 @@ export function UserModel(db: FirebaseFirestore.Firestore) {
     return {
         createUser,
         getUser,
+        getAllUsers,
         getUserByEmail,
         updateUser,
         deleteUserById
