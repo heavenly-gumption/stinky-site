@@ -8,12 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "autoprefixer": "^10.2.4",
+    "aws-sdk": "^2.843.0",
     "firebase": "^8.2.4",
     "firebase-admin": "^9.4.2",
+    "howler": "^2.2.1",
     "next": "10.0.5",
     "next-auth": "^3.1.0",
+    "postcss": "^8.2.6",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "swr": "^0.4.2",
+    "tailwindcss": "^2.0.3"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^2.0.0",

@@ -1,7 +1,8 @@
 export enum DatabaseCollections {
     Users = 'users',
     Accounts = 'accounts',
-    Sessions = 'sessions'
+    Sessions = 'sessions',
+    Clips = 'clips'
 }
 
 export type DatabaseId = string;
@@ -38,6 +39,18 @@ export type SessionAge = {
     maxAge: number,
     updateAge: number
 }
+
+export type Clip = {
+    id: string,
+    time: Date,
+    name: string,
+    url: string,
+    clipstart: number,
+    clipend: number,
+    participants: string[],
+    duration: number
+}
+
 
 export type Role = "user"
 | "5v5-uploader"
