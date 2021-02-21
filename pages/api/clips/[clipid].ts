@@ -5,13 +5,13 @@ import { ClipModel } from "../../../utils/db/models/clips"
 import { Database } from "../../../utils/db/db"
 
 const s3 = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET
+  accessKeyId: process.env.SITE_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.SITE_AWS_SECRET
 })
 
 async function getClipDataFromS3(clip: Clip): Promise<Buffer> {
   const params = {
-    Bucket: process.env.AWS_S3_BUCKET,
+    Bucket: process.env.SITE_AWS_S3_BUCKET,
     Key: `clips/${clip.id}.pcm`
   }
 
