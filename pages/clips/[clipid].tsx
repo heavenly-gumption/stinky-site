@@ -3,6 +3,7 @@ import Page from '../../components/scaffolding/page'
 import { isAdminRole, isDefaultRole } from '../../utils/roles'
 import { Howl, Howler } from 'howler'
 import { useRouter } from 'next/router'
+import { useEffect, useState, useRef } from 'react'
 
 import { Clip } from "../../types/models"
 
@@ -74,17 +75,42 @@ function writeWavHeader(buffer: ArrayBuffer, dataSize) {
   return buffer;
 }
 
+async function loadClipData(clipid: string, progressCallback): Promise<string> {
+  let start = 0
+  let done = false
+  let base64 = ""
+  do {
+    const response = await fetch(`/api/clipdata/${clipid}?start=${start}`)
+    const json = await response.json()
+    base64 += json.data
+    start = json.ptr
+    done = json.done
+    progressCallback(start / json.duration)
+  } while (!done)
+
+  return base64
+}
+
 export default function ClipPage() {
   const router = useRouter()
   const { clipid } = router.query
-  const { data, error } = useSWR(clipid ? `/api/clips/${clipid}` : null, fetcher)
+  const clip = useSWR(clipid ? `/api/clips/${clipid}` : null, fetcher)
+  const [ audioData, setAudioData ] = useState(null)
+  const [ audioLoadProgress, setAudioLoadProgress ] = useState(0)
 
-  if (error) return <div>Failed to load</div>
-  if (!data) return <div>Loading...</div>
+  useEffect(() => {
+    if (!clipid) return
+    loadClipData(clipid as string, setAudioLoadProgress)
+      .then(data => setAudioData(data))
+  }, [clipid])
 
-  const wavBuffer = (new Uint8Array(44 + data.duration)).buffer
-  writeWavHeader(wavBuffer, data.duration)
-  writeBase64ToArrayBuffer(data.data, wavBuffer, 44)
+  if (clip.error) return <div>Failed to load</div>
+  if (!clip.data) return <div>Loading...</div>
+  if (!audioData) return <div>Loading clip... { Math.round(100 * audioLoadProgress) }%</div>
+
+  const wavBuffer = (new Uint8Array(44 + clip.data.duration)).buffer
+  writeWavHeader(wavBuffer, clip.data.duration)
+  writeBase64ToArrayBuffer(audioData, wavBuffer, 44)
   const audioSrc = 'data:audio/wav;base64,' + arrayBufferToBase64(wavBuffer)
 
   return (
@@ -92,8 +118,8 @@ export default function ClipPage() {
       isAllowedWithRoles={isDefaultRole}
       page={
         <div className="container px-4 text-center">
-          <div> {data.id} </div>
-          <ClipEditor clip={data} audioSrc={audioSrc} wavBuffer={wavBuffer}/>
+          <div> {clip.data.id} </div>
+          <ClipEditor clip={clip.data} audioSrc={audioSrc} wavBuffer={wavBuffer}/>
         </div>
       }
     />

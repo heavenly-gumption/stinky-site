@@ -108,6 +108,11 @@ export default function ClipEditor({ clip, wavBuffer, audioSrc }: ClipEditorProp
     setSound(newSound)
     newSound.play()
     Howler.volume(0.5)
+    return () => {
+      if (sound) {
+        sound.stop()
+      }
+    }
   }, [wavBuffer, audioSrc])
 
   useEffect(() => {
