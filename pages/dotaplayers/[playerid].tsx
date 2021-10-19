@@ -112,7 +112,7 @@ export default function DotaPlayersIndex() {
     <Page
       isAllowedWithRoles={isDefaultRole}
       page={
-        <div class="container">
+        <div className="container">
           <Link href="/dotaplayers">
             <a> Back </a>
           </Link>

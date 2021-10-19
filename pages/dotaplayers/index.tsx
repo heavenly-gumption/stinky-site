@@ -44,7 +44,7 @@ export default function DotaPlayersIndex() {
     <Page
       isAllowedWithRoles={isDefaultRole}
       page={
-        <div class="container">
+        <div className="container">
           <div className="text-xl"> registered dota players </div>
           <table>
             <thead>
