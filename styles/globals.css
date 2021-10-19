@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+thead {
+  text-align: left;
+}
+
+td {
+  padding-right: 15px;
+}

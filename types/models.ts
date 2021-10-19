@@ -2,7 +2,12 @@ export enum DatabaseCollections {
     Users = 'users',
     Accounts = 'accounts',
     Sessions = 'sessions',
-    Clips = 'clips'
+    Clips = 'clips',
+    DotaPlayers = 'dotaplayers',
+}
+
+export enum DatabaseSubCollections {
+    MMRHistory = 'mmrhistory',
 }
 
 export type DatabaseId = string;
@@ -49,6 +54,21 @@ export type Clip = {
     clipend: number,
     participants: string[],
     duration: number
+}
+
+export type MMRHistory = {
+    timestamp: number,
+    oldMMR: number,
+    newMMR: number,
+}
+
+export type DotaPlayer = {
+    id: string,
+    username: string,
+    lastMatchId: number,
+    mmr: number,
+    steamId: string,
+    mmrhistory?: MMRHistory[],
 }
 
 
