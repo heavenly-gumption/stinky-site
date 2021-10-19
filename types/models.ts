@@ -68,7 +68,7 @@ export type DotaPlayer = {
     lastMatchId: number,
     mmr: number,
     steamId: string,
-    mmrhistory?: MMRHistory[],
+    mmrHistory?: MMRHistory[],
 }
 
 

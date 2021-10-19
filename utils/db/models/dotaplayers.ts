@@ -15,12 +15,16 @@ export function DotaPlayerModel(db: FirebaseFirestore.Firestore) {
         const mmrHistory = await Players.doc(discordId).collection(DatabaseSubCollections.MMRHistory).get();
         return {
             id: doc.id,
-            ...doc.data(),
+            username: doc.data().username,
+            lastMatchId: doc.data().lastMatchId,
+            mmr: doc.data().mmr,
+            steamId: doc.data().steamId,
             mmrHistory: mmrHistory.docs.map(history => {
                 const data = history.data()
                 return {
                     timestamp: parseInt(history.id),
-                    ...data
+                    oldMMR: data.oldMMR,
+                    newMMR: data.newMMR,
                 }
             })
         }
