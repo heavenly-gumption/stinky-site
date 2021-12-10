@@ -14,7 +14,7 @@
 
 .selector {
   display: flex;
-  width: 800px;
+  width: 1000px;
   min-height: 0;
   flex: 1 1 auto;
 }
@@ -44,7 +44,7 @@
 }
 
 .audioPlayer {
-  width: 800px;
+  width: 1000px;
   margin-top: 10px;
   margin-bottom: 20px;
 }

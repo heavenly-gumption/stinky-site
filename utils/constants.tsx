@@ -2536,7 +2536,7 @@ export const clips2021 = [
   {
     "id": "76b5cb243ca14b28",
     "clipstart": 0,
-    "duration": "55242",
+    "duration": 55242,
     "participants": [
       "131597111602053123"
     ],

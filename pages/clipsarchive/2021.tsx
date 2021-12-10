@@ -60,6 +60,7 @@ export default function ClipsArchive2021() {
     .sort((a, b) => a.time.getTime() - b.time.getTime())
 
   const rows = clips.map(clip => {
+    const durationSecs = Math.floor((clip.clipend - clip.clipstart) / 48000 / 2)
     return {
       "time": {
         data: new Date(clip.time),
@@ -71,6 +72,12 @@ export default function ClipsArchive2021() {
           <button onClick={() => setLoadedClip(clip)}>
             <p> { clip.name } </p>
           </button>
+        )
+      },
+      "duration": {
+        data: durationSecs,
+        renderable: (
+          Math.floor(durationSecs / 60) + ":" + String(durationSecs % 60).padStart(2, '0')
         )
       },
       "participants": {
@@ -91,6 +98,7 @@ export default function ClipsArchive2021() {
       headers={[
         { field: "time", name: "Date" },
         { field: "name", name: "Name" },
+        { field: "duration", name: "Duration" },
       ]}
       rows={rows}
       filter={filter}
