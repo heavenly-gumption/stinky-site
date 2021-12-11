@@ -1,0 +1,50 @@
+.container {
+  max-height: 100vh;
+  height: 100vh;
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.clipPlayer {
+  flex: 0 1 auto;
+}
+
+.selector {
+  display: flex;
+  width: 1000px;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.userFilterItem {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.userFilter {
+  overflow-y: scroll;
+  margin-right: 10px;
+}
+
+.clipTable {
+  overflow-y: scroll;
+  flex-grow: 1;
+}
+
+.container h3 {
+  font-size: 1.5rem;
+}
+
+.audioPlayer {
+  width: 1000px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
