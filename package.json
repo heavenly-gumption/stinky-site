@@ -11,7 +11,7 @@
     "autoprefixer": "^10.2.4",
     "aws-sdk": "^2.843.0",
     "date-fns": "^2.27.0",
-    "discord.js": "^13.3.1",
+    "discord.js": "12.5.3",
     "firebase": "^8.2.4",
     "firebase-admin": "^9.4.2",
     "howler": "^2.2.1",
