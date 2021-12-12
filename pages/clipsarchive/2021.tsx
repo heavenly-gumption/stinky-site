@@ -1,3 +1,4 @@
+import useSWR from 'swr'
 import { clips2021 } from '../../utils/constants'
 import { format } from 'date-fns'
 import { useState, useRef, useEffect } from 'react'
@@ -13,6 +14,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json())
 const BUCKET_PREFIX = 'https://heavenly-gumption-clips-archive.s3.us-east-2.amazonaws.com/2021/'
 
 export default function ClipsArchive2021() {
+  const { data, error } = useSWR(`/api/discord/guildmembers/120386138061012993`, fetcher)
   const [ loadedClip, setLoadedClip ] = useState(null)
   const [ selectedUsers, setSelectedUsers ] = useState([])
   const audioRef = useRef(null)
@@ -116,18 +118,24 @@ export default function ClipsArchive2021() {
   )
 
   const userSet: Set<string> = new Set(clips.map(clip => clip.participants).flat())
-  const userElems = Array.from(userSet.values())
-    .map(id => {
+  const guildUsers = data ? data.map(m => m.user).filter(m => userSet.has(m.id)) : []
+  const userElems = guildUsers.sort((a, b) => {
+    if (a.username < b.username) return -1;
+    if (a.username > b.username) return 1;
+    return 0;
+  }).map(u => {
       return (
-        <div key={id} className={styles.userFilterItem}>
+        <div key={u.id} className={styles.userFilterItem}>
           <input
             type="checkbox"
             className={styles.checkbox}
-            checked={selectedUsers.includes(id)}
-            onChange={() => selectUser(id)}/>
+            checked={selectedUsers.includes(u.id)}
+            onChange={() => selectUser(u.id)}/>
           <DiscordUser
-            key={id}
-            id={id}
+            key={u.id}
+            id={u.id}
+            username={u.username}
+            avatar={u.avatar}
           />
         </div>
       )
