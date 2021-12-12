@@ -1,11 +1,19 @@
 import { Client, Intents } from 'discord.js'
 
 var client: Client
+var clientPromise: Promise<Client>
 
-export function DiscordClient() {
+export async function DiscordClient() {
   if (client) return client;
+  if (clientPromise) return clientPromise;
 
-  client = new Client()
-  client.login(process.env.DISCORD_TOKEN)
-  return client
+  clientPromise = setupClient()
+  return clientPromise
+}
+
+async function setupClient(): Promise<Client> {
+  const c = new Client()
+  console.log(process.env.DISCORD_TOKEN)
+  await c.login(process.env.DISCORD_TOKEN)
+  return c
 }
