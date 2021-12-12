@@ -13,7 +13,6 @@ export async function DiscordClient() {
 
 async function setupClient(): Promise<Client> {
   const c = new Client()
-  console.log(process.env.DISCORD_TOKEN)
   await c.login(process.env.DISCORD_TOKEN)
   return c
 }
